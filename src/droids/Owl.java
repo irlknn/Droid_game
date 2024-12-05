@@ -48,10 +48,10 @@ public class Owl extends Droid {
     public String getSpecialAbilitySkin() { return this.specialAbilitySkin; }
 
     @Override
-    public void resetDroid(Droid d){
-        d.setHp(maxHp);
-        d.setDamage(maxDamage);
-        d.setUsingAmountOfSA(maxUsageOfSA);
+    public void resetDroid(){
+        setHp(maxHp);
+        setDamage(maxDamage);
+        setUsingAmountOfSA(maxUsageOfSA);
     }
 
     public int getMaxHp(){return maxHp;}

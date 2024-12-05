@@ -3,9 +3,9 @@ import java.io.*;
 public class FileWork {
     private static final String FILE_NAME = "battle_log.txt";
 
-    private PrintStream originalOut;  // Зберігаємо оригінальний потік System.out
-    private PrintStream fileOut;      // Потік для запису у файл
-    private PrintStream teeStream;    // Потік для одночасного виводу в консоль і файл
+    private PrintStream originalOut;
+    private PrintStream fileOut;
+    private PrintStream teeStream;
 
     public void download() {
         try {
@@ -29,7 +29,6 @@ public class FileWork {
         }
     }
 
-    // Метод для перенаправлення виводу в консоль і у файл
     public void redirectOutputToFile() throws FileNotFoundException {
         originalOut = System.out;
         fileOut = new PrintStream(new FileOutputStream(FILE_NAME, true));
@@ -51,30 +50,5 @@ public class FileWork {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-}
-
-class TeeStream extends PrintStream {
-    private final PrintStream secondStream;
-
-    public TeeStream(PrintStream mainStream, PrintStream secondStream) {
-        super(mainStream);
-        this.secondStream = secondStream;
-    }
-
-    @Override
-    public void write(byte[] buf, int off, int len) {
-        try {
-            super.write(buf, off, len);
-            secondStream.write(buf, off, len);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void flush() {
-        super.flush();
-        secondStream.flush();
     }
 }

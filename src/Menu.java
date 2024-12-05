@@ -1,16 +1,13 @@
 import Battle.PVPBattle;
 import Battle.TeamBattle;
 import HelperClasses.TextMessages;
-import droids.Cow;
-import droids.Droid;
-import droids.Owl;
-import droids.Rabbit;
+import droids.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-    private static final ArrayList<Droid> droids = new ArrayList<>();
+    private static final Team droids = new Team();// = new ArrayList<>();
     private static final Scanner input = new Scanner(System.in);
     private static final TextMessages output = new TextMessages();
     private static final FileWork fileWork = new FileWork();
@@ -22,47 +19,15 @@ public class Menu {
             int choice = input.nextInt();
             switch (choice){
                 case 1: createDroid(); break;
-                case 2: output.showDroidList(droids); break;
-                case 3: pvpFight(false); resetEveryDroid(); break;
-                case 4: teamFight(false); resetEveryDroid(); break;
-                case 5: chooseTypeOfBattleToRecord(); fileWork.stopLogging(); break;
-                case 6: fileWork.upload(); break;
-                case 7: loadAlreadyCreatedDroids(); break;
+                case 2: loadAlreadyCreatedDroids(); break;
+                case 3: output.showDroidList(droids); break;
+                case 4: pvpFight(false); resetEveryDroid(); break;
+                case 5: teamFight(false); resetEveryDroid(); break;
+                case 6: chooseTypeOfBattleToRecord(); fileWork.stopLogging(); break;
+                case 7: fileWork.upload(); break;
                 case 0: output.exitText(); return;
             }
         }
-    }
-
-    private static void chooseTypeOfBattleToRecord(){
-        System.out.println("""
-                Select the type of battle you want to record:
-                1. Droid vs droid
-                2. Team vs team""");
-        int choice = input.nextInt();
-        if(choice == 1){
-            pvpFight(true);
-        }else if(choice == 2){
-            teamFight(true);
-        }else {
-            while (choice < 0 || choice > 2){
-                System.out.println("Enter 1 or 2");
-                choice = input.nextInt();
-            }
-        }
-    }
-
-    private static void loadAlreadyCreatedDroids(){
-        droids.add(new Rabbit("nadia"));
-        droids.add(new Cow("vasil"));
-        droids.add(new Owl("Yurii"));
-        droids.add(new Owl("Dana"));
-        droids.add(new Rabbit("rabbit"));
-        droids.add(new Cow("cow"));
-        droids.add(new Owl("Owl"));
-        droids.add(new Cow("cat"));
-        droids.add(new Cow("luna"));
-        droids.add(new Rabbit("daisy"));
-        System.out.println(droids.size() + " new droid have been created");
     }
 
     public static void createDroid(){
@@ -111,6 +76,20 @@ public class Menu {
         return false;
     }
 
+    private static void loadAlreadyCreatedDroids(){
+        droids.add(new Rabbit("nadia"));
+        droids.add(new Cow("vasil"));
+        droids.add(new Owl("Yurii"));
+        droids.add(new Owl("Dana"));
+        droids.add(new Rabbit("rabbit"));
+        droids.add(new Cow("cow"));
+        droids.add(new Owl("Owl"));
+        droids.add(new Cow("cat"));
+        droids.add(new Cow("luna"));
+        droids.add(new Rabbit("daisy"));
+        System.out.println(droids.size() + " new droid have been created");
+    }
+
     public static void pvpFight(boolean recordToFile){
         if(isDroidsSizeLessThan(2)){
             System.out.println("Not enough droids for the fight");
@@ -143,24 +122,39 @@ public class Menu {
             size = input.nextInt();
         }
 
-        ArrayList<Droid> team1 = new ArrayList<>();
-        ArrayList<Droid> team2 = new ArrayList<>();
+        ArrayList<Droid> A = new ArrayList<>();
+        ArrayList<Droid> B = new ArrayList<>();
         output.showDroidList(droids);
         System.out.println("Choose droids for Team1");
+        Team team1 = new Team(A);
         fillTheTeam(size, team1);
         System.out.println("Choose droids for Team2");
+        Team team2 = new Team(B);
         fillTheTeam(size, team2);
 
         if(recordToFile){
             fileWork.download();
         }
-
         TeamBattle battle = new TeamBattle(team1, team2);
         battle.fight();
     }
 
-    private static boolean isDroidsSizeLessThan(int require){
-        return droids.size() <= require;
+    private static void chooseTypeOfBattleToRecord(){
+        System.out.println("""
+                Select the type of battle you want to record:
+                1. Droid vs droid
+                2. Team vs team""");
+        int choice = input.nextInt();
+        if(choice == 1){
+            pvpFight(true);
+        }else if(choice == 2){
+            teamFight(true);
+        }else {
+            while (choice < 0 || choice > 2){
+                System.out.println("Enter 1 or 2");
+                choice = input.nextInt();
+            }
+        }
     }
 
     private static void fillTheTeam(int size, ArrayList<Droid> team){
@@ -176,8 +170,12 @@ public class Menu {
 
     private static void resetEveryDroid(){
         for(Droid d : droids){
-            d.resetDroid(d);
+            d.resetDroid();
         }
+    }
+
+    private static boolean isDroidsSizeLessThan(int require){
+        return droids.size() <= require;
     }
 
     public static void main(String[] args) {

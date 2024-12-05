@@ -36,12 +36,12 @@ public class TextMessages {
                            "~-~-~-~- MENU -~-~-~-~\n"  +
                            RESET +
                            "1. Create Droid\n" +
-                           "2. Show droid list\n" +
-                           "3. Droid vs droid\n" +
-                           "4. Team vs Team\n" +
-                           "5. Download game to file\n" +
-                           "6. Upload game out of file\n" +
-                           "7. Download already created droid\n" +
+                            "2. Download already created droid\n" +
+                           "3. Show droid list\n" +
+                           "4. Droid vs droid\n" +
+                           "5. Team vs Team\n" +
+                           "6. Download game to file\n" +
+                           "7. Upload game out of file\n" +
                            "0. Exit\n" +
                            YELLOW +
                            "~-~-~-~-~-~-~-~-~-~-~" + RESET);

@@ -49,16 +49,16 @@ public class Cow extends Droid{
     public int getMaxHp(){return maxHp;}
 
     @Override
-    public void resetDroid(Droid d){
-        d.setHp(maxHp);
-        d.setDamage(maxDamage);
-        d.setUsingAmountOfSA(maxUsageOfSA);
+    public void resetDroid(){
+        setHp(maxHp);
+        setDamage(maxDamage);
+        setUsingAmountOfSA(maxUsageOfSA);
     }
 
     @Override
-    public void specialAbility(Droid droid) {
-        int increasedDamage = droid.getDamage() + 2;
-        droid.setDamage(increasedDamage);
+    public void specialAbility() {
+        int increasedDamage = getDamage() + 2;
+        setDamage(increasedDamage);
         System.out.println("The Cow increased damage");
     }
 

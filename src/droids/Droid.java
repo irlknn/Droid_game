@@ -37,14 +37,14 @@ public abstract class Droid {
         return this.hp > 0;
     }
 
-    public void resetDroid(Droid d){}
+    public void resetDroid(){}
 
     public boolean canSummon(){return false;}
 
     //public Droid summonSpecialDroid(){return null;}
 
     public int getMaxHp(){return 0;}
-    public void specialAbility(Droid droid){}
+    public void specialAbility(){}
 
     @Override
     public String toString() {

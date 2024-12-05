@@ -3,43 +3,50 @@ package Battle;
 import HelperClasses.TextMessages;
 import droids.Droid;
 import droids.SpecialDroid;
+import droids.Team;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class TeamBattle {
     private static final TextMessages output = new TextMessages();
-    private static ArrayList<Droid> team1 = new ArrayList<>();
-    private static ArrayList<Droid> team2 = new ArrayList<>();
+//    private static Team team1;
+//    private static Team team2;
+    private Team team1;
+    private Team team2;
 
-    public TeamBattle(ArrayList<Droid> team1, ArrayList<Droid> team2){
-        TeamBattle.team1 = team1;
-        TeamBattle.team2 = team2;
+
+
+    public TeamBattle(Team team1, Team team2){
+//        this.team1 = (Team) team1;
+//        this.team2 = (Team) team2;
+        this.team1 = team1;
+        this.team2 = team2;
+
     }
 
     public void fight(){
         output.startForTeamBattle(team1, team2);
         int round = 0;
+//        Team teamA = (Team) team1;
 
-        while(isSomeoneAlive(team1) && isSomeoneAlive(team2)){
+        while(team1.isSomeoneAlive() && team2.isSomeoneAlive()){
             round++;
             System.out.println("\n=*=*=*= Round" + round + "=*=*=*=\n");
             for(int i = 0; i < team1.size() && i < team2.size(); i++){
-
-                Droid a = choosingRandomDroid(team1);
-                Droid b = choosingRandomDroid(team2);
-
+                Droid a = team1.choosingRandomDroid();
+                Droid b = team2.choosingRandomDroid();
                 while (a.isAlive() && b.isAlive()){
                     output.displayHealth(a, b);
 
                     Random r = new Random();
                     if (r.nextBoolean()){
-                        if (!isSomeoneAlive(team1)){
+                        if (!team1.isSomeoneAlive()){
                             break;
                         }
                         battleProcess(a, b);
                     }else {
-                        if (!isSomeoneAlive(team2)){
+                        if (!team2.isSomeoneAlive()){
                             break;
                         }
                         battleProcess(b, a);
@@ -53,19 +60,19 @@ public class TeamBattle {
         output.resultOfTeamBattle(team1, team2);
     }
 
-    private Droid choosingRandomDroid(ArrayList<Droid> team){
-        Random r = new Random();
-        int index = r.nextInt(team.size());
-        Droid droid = team.get(index);
-        while (!droid.isAlive()){
-            index = r.nextInt(team.size());
-            droid = team.get(index);
-            if (!isSomeoneAlive(team)){
-                break;
-            }
-        }
-        return droid;
-    }
+//    private Droid choosingRandomDroid(ArrayList<Droid> team){
+//        Random r = new Random();
+//        int index = r.nextInt(team.size());
+//        Droid droid = team.get(index);
+//        while (!droid.isAlive()){
+//            index = r.nextInt(team.size());
+//            droid = team.get(index);
+//            if (!isSomeoneAlive(team)){
+//                break;
+//            }
+//        }
+//        return droid;
+//    }
 
     public void battleProcess(Droid attacker, Droid defender) {
         Random random = new Random();
@@ -85,7 +92,7 @@ public class TeamBattle {
                 output.printDefaultSkin(specialDroid);
                 takeDamage(specialDroid, defender);
             }else {
-                attacker.specialAbility(attacker);
+                attacker.specialAbility();
                 output.printSpecialAbilitySkin(attacker);
             }
         }
